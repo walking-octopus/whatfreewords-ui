@@ -5,40 +5,67 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>What Free Words</title>
-    <link href="lib/tailwind.css" rel="stylesheet" />
-    <link rel="stylesheet" href="lib/openLayers/ol.css" type="text/css" />
-    <link rel="stylesheet" href="style.css" type="text/css" />
+    <link
+      href="lib/tailwind.css"
+      rel="stylesheet"
+    />
+    <link
+    rel="stylesheet"
+    href="lib/openLayers/ol.css"
+    type="text/css"
+    />
+    <link
+    rel="stylesheet"
+    href="style.css"
+    type="text/css"
+    />
     <script src="https://kit.fontawesome.com/bc15aa5425.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <script src="lib/openLayers/ol.js"></script>
-    <script src="geocode.js"></script>
-    <script src="script.js"></script>
-
-    <div class="header flex justify-between w-full content-center items-center font-medium py-3 bg-cyan-900 text-white">
-      <div class="logo text-xl ml-3.5">What Free Words</div>
     
-      <nav class="links font-normal">
-        <a href="https://github.com/pballett/whatfreewords" class="px-5">GitHub</a>
-        <a href="#" class="px-5">About</a>
+    <script src="geocode.js"></script>
+    
+    <div
+    class="
+    header
+    flex
+    justify-between
+    w-full
+    content-center
+    items-center
+    font-medium
+    py-3
+    bg-cyan-900
+    text-white">
+    <div class="logo text-xl ml-3.5">What Free Words</div>
+    
+    <nav class="links font-normal">
+      <a href="https://github.com/pballett/whatfreewords" clas="px-5">GitHub</a>
+      <a href="#" class="px-5">About</a>
       </nav>
     </div>
     
     <div
       id="infoBox"
       class="shadow-md items-center absolute top-16 bottom-0 left-0 right-0 h-12 lg:h-14 w-96 p-3 flex-nowrap bg-white flex-row justify-between z-10"
-      style="max-width: 95vw; display: flex;">
-      
+      style="max-width: 95vw; overflow-x: clip; white-space: nowrap; display: flex;"
+    >
       <span class="text-lg sm:text-xl lg:text-xl">
-        <span class="text-red-500 font-medium font-mono tracking-tighter">/|/</span>
-        <span id="words" class="truncate">woodworking.android.creaky</span>
+        <span class="text-red-500 font-medium">/|/ </span>
+        <span id="words">woodworking.android.creaky</span>
       </span>
-      
       <div class="controls flex-row flex gap-1">
-        <button onclick="shareWords()" class="bg-yellow-300 hover:bg-yellow-200 font-medium hover:shadow duration-100 w-8 h-8 active:shadow-md">
+        <button
+          onclick="shareWords()"
+          class="bg-yellow-300 hover:bg-yellow-200 font-medium hover:shadow duration-100 w-8 h-8 active:shadow-md"
+        >
           <i class="fa-solid fa-copy"></i>
         </button>
-        <button onclick="TogglePopup()" class="bg-yellow-300 hover:bg-yellow-200 font-medium hover:shadow duration-100 w-8 h-8 active:shadow-md">
+        <button
+          onclick="TogglePopup()"
+          class="bg-yellow-300 hover:bg-yellow-200 font-medium hover:shadow duration-100 w-8 h-8 active:shadow-md"
+        >
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
       </div>
@@ -47,8 +74,8 @@
     <div
       id="searchBox"
       class="shadow-md absolute top-16 bottom-0 left-0 right-0 h-52 w-96 flex-nowrap overflow-clip flex-col bg-white z-10"
-      style="max-width: 95vw; overflow-x: clip; white-space: nowrap; display: none;">
-      
+      style="max-width: 95vw; overflow-x: clip; white-space: nowrap; display: none;"
+    >
       <div class="searchbox p-3 flex flex-row justify-between border-b">
         <input
           id="searchInput"
@@ -57,21 +84,32 @@
           class="text-lg hover:border-gray-400 focus:border-gray-500 outline-none w-3/4 px-2"
         />
         <div class="controls flex-row flex gap-1">
-          <button onclick="Search()" class="bg-yellow-300 hover:bg-yellow-200 font-medium hover:shadow duration-100 active:shadow-md w-8 h-8">
+          <button
+            onclick="Search()"
+            class="bg-yellow-300 hover:bg-yellow-200 font-medium hover:shadow duration-100 active:shadow-md w-8 h-8"
+          >
             <i class="fa-solid fa-arrow-left"></i>
           </button>
-          <button onclick="TogglePopup()" class="bg-yellow-300 hover:bg-yellow-200 font-medium hover:shadow duration-100 active:shadow-md w-8 h-8">
+          <button
+            onclick="TogglePopup()"
+            class="bg-yellow-300 hover:bg-yellow-200 font-medium hover:shadow duration-100 active:shadow-md w-8 h-8"
+          >
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
       </div>
-      
       <div class="searchResults bg-gray-100 flex-grow flex flex-col h-0">
         <div id="searchResults" class="overflow-y-auto overflow-x-hidden">
-          <div class="border-b-2 border-gray-300 py-2.5 px-4 duration-100 hover:bg-gray-200 active:bg-gray-300">placeholder</div>
+          <div
+            class="border-b-2 border-gray-300 py-2.5 px-4 duration-100 hover:bg-gray-200 active:bg-gray-300"
+          >
+            placeholder
+          </div>
         </div>
-        
-        <div id="searchPlaceholder" class="not-hidden flex-grow flex-col justify-center flex text-center">
+        <div
+          id="searchPlaceholder"
+          class="not-hidden flex-grow flex-col justify-center flex text-center"
+        >
           Search for any place or word address e.g.
           <div class="examples pt-3 flex flex-col gap-2">
             <div>Pechers'kyi District, Kyyiv</div>
@@ -80,10 +118,16 @@
         </div>
       </div>
     </div>
+      
+      <div id="map" class="flex-grow overflow-hidden"></div>
+      <div id="marker">
+        <img
+        src="https://cdn.mapmarker.io/api/v1/pin?size=35&background=%23D33115&color=%23FFFFFF&voffset=0&hoffset=0"
+        />
+      </div>
+      
+      <script src="script.js"></script>
+
+    </body>
+    </html>
     
-    <div id="map" class="flex-grow overflow-hidden"></div>
-    <div id="marker">
-      <img src="https://cdn.mapmarker.io/api/v1/pin?size=35&voffset=0&hoffset=0" />
-    </div>
-  </body>
-</html>
