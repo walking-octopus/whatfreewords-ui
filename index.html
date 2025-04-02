@@ -48,14 +48,14 @@
     
     <div
       id="infoBox"
-      class="shadow-md items-center absolute top-16 bottom-0 left-0 right-0 h-12 lg:h-14 w-96 p-3 flex-nowrap bg-white flex-row justify-between z-10"
-      style="max-width: 95vw; overflow-x: clip; white-space: nowrap; display: flex;"
+      class="shadow-md absolute top-16 left-0 z-10 bg-white flex items-center p-3"
+      style="width: auto; max-width: 95vw; white-space: nowrap; overflow: hidden;"
     >
-      <span class="text-lg sm:text-xl lg:text-xl">
-        <span class="text-red-500 font-medium">/|/ </span>
-        <span id="words">woodworking.android.creaky</span>
+      <span class="text-lg sm:text-xl lg:text-xl truncate">
+        <span class="text-red-500 font-medium font-mono tracking-tighter">/|/ </span>
+        <span id="words" class="truncate">woodworking.android.creaky</span>
       </span>
-      <div class="controls flex-row flex gap-1">
+      <div class="controls flex gap-1 ml-4">
         <button
           onclick="shareWords()"
           class="bg-yellow-300 hover:bg-yellow-200 font-medium hover:shadow duration-100 w-8 h-8 active:shadow-md"
@@ -70,7 +70,7 @@
         </button>
       </div>
     </div>
-
+     
     <div
       id="searchBox"
       class="shadow-md absolute top-16 bottom-0 left-0 right-0 h-52 w-96 flex-nowrap overflow-clip flex-col bg-white z-10"
