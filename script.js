@@ -14,16 +14,24 @@ function updateWords(coords) {
   console.log(coords);
 }
 
-function setStart(coords, map, marker) {
-  map.setView(
-    new ol.View({
-      center: ol.proj.fromLonLat(coords),
-      zoom: 19,
-      maxZoom: 20,
-    })
-  );
-
+function setStartWithView(coords, boundingbox) {
   marker.setPosition(ol.proj.fromLonLat(coords));
+
+  if (boundingbox) {
+    const minLat = parseFloat(boundingbox[0]);
+    const maxLat = parseFloat(boundingbox[1]);
+    const minLon = parseFloat(boundingbox[2]);
+    const maxLon = parseFloat(boundingbox[3]);
+
+    const bottomLeft = ol.proj.fromLonLat([minLon, minLat]);
+    const topRight = ol.proj.fromLonLat([maxLon, maxLat]);
+    const extent = [bottomLeft[0], bottomLeft[1], topRight[0], topRight[1]];
+
+    map.getView().fit(extent, { padding: [40, 40, 40, 40], duration: 1000 });
+  } else {
+    map.getView().setCenter(ol.proj.fromLonLat(coords));
+    map.getView().setZoom(19);
+  }
 
   updateWords(coords);
 }
@@ -56,11 +64,9 @@ function TogglePopup() {
   searchResults.style.display = "none";
 
   if (main.style.display === "none") {
-    // Back
     search.style.display = "none";
     main.style.display = "flex";
   } else {
-    // Show
     search.style.display = "flex";
     main.style.display = "none";
   }
@@ -68,35 +74,29 @@ function TogglePopup() {
 
 async function nominatimSearch(query) {
   const response = await fetch(
-    "https://nominatim.openstreetmap.org/search.php?q={}&format=json".format(
-      query
-    )
+    "https://nominatim.openstreetmap.org/search.php?q={}&format=json".format(query)
   );
   const places = await response.json();
   return places;
 }
 
 function createResults(results) {
-  console.log(results);
+  searchResults.innerHTML = "";
 
   results.forEach((result) => {
-    console.log(result.display_name, result.coordinates);
-
     let element = document.createElement("div");
     element.innerHTML =
       '<span class="w-full h-full whitespace-normal inline-block">{}</span>'.format(
         result.display_name
       );
-    element.setAttribute(
-      "class",
-      "sugestion border-b-2 border-gray-300 py-2.5 px-4 duration-100 hover:bg-gray-200 active:bg-gray-300"
-    );
-    element.setAttribute(
-      "onclick",
-      "setStart([{}, {}], map, marker); TogglePopup();".format(
-        result.coordinates
-      )
-    );
+    element.className =
+      "sugestion border-b-2 border-gray-300 py-2.5 px-4 duration-100 hover:bg-gray-200 active:bg-gray-300";
+      
+    element.addEventListener("click", function () {
+      setStartWithView(result.coordinates, result.boundingbox);
+      TogglePopup();
+    });
+
     searchResults.appendChild(element);
   });
 }
@@ -121,10 +121,11 @@ function Search() {
       createResults(results);
     } else {
       nominatimSearch(searchInput.value).then((places) => {
-        places.forEach(function (item, index) {
+        places.forEach(function (item) {
           var result = {
             display_name: item["display_name"],
-            coordinates: [item["lon"], item["lat"]],
+            coordinates: [parseFloat(item["lon"]), parseFloat(item["lat"])],
+            boundingbox: item["boundingbox"],
           };
           results.push(result);
         });
@@ -154,14 +155,13 @@ onload = function () {
   URLwords = parseParams();
 
   if (URLwords != null) {
-    setStart(words_to_coord(URLwords), map, marker);
+    setStartWithView(words_to_coord(URLwords), null);
   } else {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
-        setStart(
+        setStartWithView(
           [position.coords.longitude, position.coords.latitude],
-          map,
-          marker
+          null
         );
       });
     }
@@ -178,15 +178,17 @@ coords = [-0.116708278, 51.50844113];
 var map = new ol.Map({
   target: "map",
   layers: [
-    new ol.layer.Tile({
-      source: new ol.source.OSM(),
-    }),
+    new ol.layer.Tile({ source: new ol.source.OSM({ preload: Infinity }) })
   ],
   view: new ol.View({
     center: ol.proj.fromLonLat(coords),
     zoom: 16,
     maxZoom: 20,
+    constrainResolution: true,
+    smoothExtentChange: true
   }),
+  loadTilesWhileAnimating: true,
+  loadTilesWhileInteracting: true
 });
 
 var marker = new ol.Overlay({
