@@ -70,54 +70,59 @@
         </button>
       </div>
     </div>
-     
-    <div
-      id="searchBox"
-      class="shadow-md absolute top-16 bottom-0 left-0 right-0 h-52 w-96 flex-nowrap overflow-clip flex-col bg-white z-10"
-      style="max-width: 95vw; overflow-x: clip; white-space: nowrap; display: none;"
-    >
-      <div class="searchbox p-3 flex flex-row justify-between border-b">
-        <input
-          id="searchInput"
-          type="text"
-          placeholder="Search"
-          class="text-lg hover:border-gray-400 focus:border-gray-500 outline-none w-3/4 px-2"
-        />
-        <div class="controls flex-row flex gap-1">
-          <button
-            onclick="Search()"
-            class="bg-yellow-300 hover:bg-yellow-200 font-medium hover:shadow duration-100 active:shadow-md w-8 h-8"
-          >
-            <i class="fa-solid fa-arrow-left"></i>
-          </button>
-          <button
-            onclick="TogglePopup()"
-            class="bg-yellow-300 hover:bg-yellow-200 font-medium hover:shadow duration-100 active:shadow-md w-8 h-8"
-          >
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-      </div>
-      <div class="searchResults bg-gray-100 flex-grow flex flex-col h-0">
-        <div id="searchResults" class="overflow-y-auto overflow-x-hidden">
-          <div
-            class="border-b-2 border-gray-300 py-2.5 px-4 duration-100 hover:bg-gray-200 active:bg-gray-300"
-          >
-            placeholder
-          </div>
-        </div>
-        <div
-          id="searchPlaceholder"
-          class="not-hidden flex-grow flex-col justify-center flex text-center"
-        >
-          Search for any place or word address e.g.
-          <div class="examples pt-3 flex flex-col gap-2">
-            <div>Pechers'kyi District, Kyyiv</div>
-            <div>/|/scramble.gaps.cobbled</div>
-          </div>
-        </div>
-      </div>
-    </div>
+	     
+	<div
+	  id="searchBox"
+	  class="shadow-md absolute top-16 bottom-0 left-0 right-0 h-52 w-96 flex-nowrap overflow-clip flex-col bg-white z-10"
+	  style="max-width: 95vw; overflow-x: clip; white-space: nowrap; display: none;"
+	>
+	  <form
+	    class="searchbox p-3 flex flex-row justify-between border-b"
+	    onsubmit="Search(); return false;"
+	  >
+	    <input
+	      id="searchInput"
+	      type="text"
+	      placeholder="Search"
+	      class="text-lg hover:border-gray-400 focus:border-gray-500 outline-none w-3/4 px-2"
+	    />
+	    <div class="controls flex-row flex gap-1">
+	      <button
+	        type="submit"
+	        class="bg-yellow-300 hover:bg-yellow-200 font-medium hover:shadow duration-100 active:shadow-md w-8 h-8"
+	      >
+	        <i class="fa-solid fa-arrow-left"></i>
+	      </button>
+	      <button
+	        type="button"
+	        onclick="TogglePopup()"
+	        class="bg-yellow-300 hover:bg-yellow-200 font-medium hover:shadow duration-100 active:shadow-md w-8 h-8"
+	      >
+	        <i class="fa-solid fa-xmark"></i>
+	      </button>
+	    </div>
+	  </form>
+
+	  <div class="searchResults bg-gray-100 flex-grow flex flex-col h-0">
+	    <div id="searchResults" class="overflow-y-auto overflow-x-hidden">
+	      <div
+	        class="border-b-2 border-gray-300 py-2.5 px-4 duration-100 hover:bg-gray-200 active:bg-gray-300"
+	      >
+	        placeholder
+	      </div>
+	    </div>
+	    <div
+	      id="searchPlaceholder"
+	      class="not-hidden flex-grow flex-col justify-center flex text-center"
+	    >
+	      Search for any place or word address e.g.
+	      <div class="examples pt-3 flex flex-col gap-2">
+	        <div>Pechers'kyi District, Kyyiv</div>
+	        <div>/|/scramble.gaps.cobbled</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
       
       <div id="map" class="flex-grow overflow-hidden"></div>
       <div id="marker">
