@@ -155,9 +155,7 @@ onload = function () {
 
   if (URLwords != null) {
     setStart(words_to_coord(URLwords), map, marker);
-    // notify("You recived a message!")
   } else {
-    // notify("Write something and share the URL!")
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
         setStart(
@@ -193,7 +191,7 @@ var map = new ol.Map({
 
 var marker = new ol.Overlay({
   position: ol.proj.fromLonLat(coords),
-  // positioning: "center-center",
+  positioning: "center-center",
   element: document.getElementById("marker"),
   stopEvent: false,
 });
